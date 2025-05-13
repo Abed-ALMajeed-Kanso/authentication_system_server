@@ -14,22 +14,26 @@ public_user.post('/login', loginLimiter, async (req, res) => {
         return res.status(StatusCodes.BAD_REQUEST).json({ message: 'Email and password required' });
 
     const user = await User.findOne({ email });
+
+    console.log(user);
+
     if (!user) 
         return res.status(StatusCodes.UNAUTHORIZED).json({ message: 'Invalid credentials' });
     
 
     const isMatch = await bcrypt.compare(password, user.password);
-    if (!isMatch) 
-        return res.status(StatusCodes.UNAUTHORIZED).json({ message: 'Invalid credentials' });
-    
+    if (!isMatch){
+      return res.status(StatusCodes.UNAUTHORIZED).json({ message: 'Invalid credentials' });
 
+    }
+        
     const token = jwt.sign({ id: user._id, email: user.email }, 'access', {
         expiresIn: rememberMe ? '2h' : '30m'
     });
 
     res.cookie('token', token, {
         httpOnly: true,
-        secure: true, // Set to true in production with HTTPS
+        secure: true, 
         sameSite: 'lax',
         maxAge: rememberMe ? 2 * 60 * 60 * 1000 : 30 * 60 * 1000 // 2 hours with remember_me, else 30 minutes
     });

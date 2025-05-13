@@ -16,7 +16,7 @@ authenticated_user.post('/logout', authenticateToken, (req,res) => {
     res.clearCookie('token', {
         httpOnly: true,
         sameSite: 'lax',
-        secure: false
+        secure: true
     });
     res.status(StatusCodes.OK).json({ message: 'Logged out successfully' });
 });
