@@ -3,10 +3,11 @@ const { StatusCodes } = require('http-status-codes');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
 const User = require('../models/user');
-const { loginLimiter } = require('../middleware/ratelimiter');
 const public_user = express.Router();
+// const { loginLimiter } = require('../middleware/ratelimiter');
 
-public_user.post('/login', loginLimiter, async (req, res) => {
+
+public_user.post('/login', async (req, res) => {
     const { email, password, rememberMe } = req.body;
 
     if (!email || !password) 

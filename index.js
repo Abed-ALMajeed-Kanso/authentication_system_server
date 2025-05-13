@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 const cors = require('cors');
 const cookieParser = require('cookie-parser');
 const dotenv = require('dotenv');
-const { globalLimiter } = require('./middleware/ratelimiter');
+// const { globalLimiter } = require('./middleware/ratelimiter');
 
 dotenv.config(); 
 
@@ -11,13 +11,14 @@ const public = require('./router/public_users.js');
 const authenticated = require('./router/authenticated_users.js');
 
 const app = express();
+app.set('trust proxy', 1)
 
 app.use(cors({
     origin: process.env.FRONTEND_URL,
     credentials: true
 }));
 
-app.use(globalLimiter);
+// app.use(globalLimiter);
 app.use(express.json());
 app.use(cookieParser());
 
