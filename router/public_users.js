@@ -3,6 +3,7 @@ const { StatusCodes } = require('http-status-codes');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
 const User = require('../models/user');
+const { serialize } = require('cookie');
 const public_user = express.Router();
 // const { loginLimiter } = require('../middleware/ratelimiter');
 
@@ -34,7 +35,7 @@ public_user.post('/login', async (req, res) => {
     res.cookie('token', token, {
         httpOnly: true,
         secure: true, 
-        sameSite: 'none',
+        sameSite: 'lax',
         maxAge: rememberMe ? 2 * 60 * 60 * 1000 : 30 * 60 * 1000 // 2 hours with remember_me, else 30 minutes
     });
 
