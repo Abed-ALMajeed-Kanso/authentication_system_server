@@ -31,11 +31,11 @@ public_user.post('/login', async (req, res) => {
         expiresIn: rememberMe ? '2h' : '30m'
     });
 
-    res.cookie('token', token, {
-        httpOnly: true,
-        secure: true, 
-        sameSite: 'lax',
-        maxAge: rememberMe ? 2 * 60 * 60 * 1000 : 30 * 60 * 1000 // 2 hours with remember_me, else 30 minutes
+    const cookie = serialize('token', token, {
+      httpOnly: true,
+      secure: true, 
+      sameSite: 'none',
+      maxAge: rememberMe ? 2 * 60 * 60 * 1000 : 30 * 60 * 1000, // 2 hours with remember_me, else 30 minutes
     });
 
     res.status(StatusCodes.OK).json({ message: 'Login successful' });

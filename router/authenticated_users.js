@@ -12,13 +12,16 @@ authenticated_user.get('/profile', authenticateToken, async (req, res) => {
     res.status(StatusCodes.OK).json(user);
 });
 
-authenticated_user.post('/logout', authenticateToken, (req,res) => {
-    res.clearCookie('token', {
+authenticated_user.post('/logout', authenticateToken, (req, res) => {
+    const cookie = serialize('token', '', {
         httpOnly: true,
+        secure: true,
         sameSite: 'lax',
-        secure: true
+        maxAge: -1, 
     });
-    res.status(StatusCodes.OK).json({ message: 'Logged out successfully' });
+    res.setHeader('Set-Cookie', cookie);
+    res.status(200).json({ message: 'Logged out successfully' });
 });
+
 
 module.exports = authenticated_user;  
