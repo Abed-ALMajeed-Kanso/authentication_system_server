@@ -12,8 +12,6 @@ const authenticated = require('./router/authenticated_users.js');
 
 const app = express();
 
-const PORT = process.env.PORT;
-
 app.use(cors({
     origin: process.env.FRONTEND_URL,
     credentials: true
@@ -25,11 +23,11 @@ app.use(cookieParser());
 
 mongoose.connect(process.env.MONGO_DB_URI)
     .then(() => console.log("Connected to MongoDB"))
-    .catch(err => console.error(" MongoDB connection error:", err));
+    .catch(err => console.error("MongoDB connection error:", err));
 
 app.use('/authenticated', authenticated);
 app.use('/', public);
 
-app.listen(PORT, () => {
+app.listen(process.env.PORT, () => {
     console.log("Server is running");
 });

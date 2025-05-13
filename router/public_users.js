@@ -4,7 +4,6 @@ const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
 const User = require('../models/user');
 const { loginLimiter } = require('../middleware/ratelimiter');
-const authenticateToken = require('../middleware/authenticationMiddleware');
 const public_user = express.Router();
 
 public_user.post('/login', loginLimiter, async (req, res) => {
@@ -39,22 +38,6 @@ public_user.post('/login', loginLimiter, async (req, res) => {
     });
 
     res.status(StatusCodes.OK).json({ message: 'Login successful' });
-});
-
-public_user.get('/check-auth', authenticateToken, async (req, res) => {
-  const user = await User.findById(req.user.id).select('firstName lastName email');
-  
-  if (!user) {
-    return res.status(StatusCodes.NOT_FOUND).json({
-      authenticated: false,
-      message: 'User not found',
-    });
-  }
-
-  return res.status(StatusCodes.OK).json({
-    authenticated: true,
-    user,
-  });
 });
 
 module.exports = public_user;
