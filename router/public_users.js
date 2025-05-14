@@ -4,7 +4,6 @@ const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
 const User = require('../models/user');
 const public_user = express.Router();
-// const { serialize } = require('cookie');
 // const { loginLimiter } = require('../middleware/ratelimiter');
 
 
