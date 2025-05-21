@@ -2,3 +2,6 @@ This is the backend of the project, built with **Express.js** and connected to a
 It handles user registration, login, authentication with JWT (stored in HttpOnly cookies), protected routes, and user data management.
 
 Deployed on Render on the following link: https://authentication-system-server-csqa.onrender.com
+
+Note: The server is hosted on Render’s free tier, which may enter a sleep mode when inactive. 
+If the application gave errors, please contact me to refresh it (it needs a rebuild sometimes).
